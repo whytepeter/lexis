@@ -19,6 +19,7 @@ import {
   getWordMastery,
 } from "../state/store.js";
 import { toast } from "../utils/toast.js";
+import { getStreakFreezes } from "../state/store.js";
 import { openEssayModal } from "./essays.js";
 import { openStudySetup } from "../study/session.js";
 
@@ -65,6 +66,9 @@ export function renderToday() {
   _renderWeekStrip(dayIndex);
   _renderTasks(plan, week);
   _renderCompleteBtn();
+  // Keep more-sheet freeze count in sync
+  const mfc = document.getElementById("more-freeze-count");
+  if (mfc) mfc.textContent = getStreakFreezes();
 }
 
 function _renderWeekStrip(dayIndex) {

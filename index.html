@@ -129,8 +129,8 @@
         <button class="bottom-tab" id="bt-essays" data-goto="essays">
           <span class="bt-icon">◻</span><span>Essays</span>
         </button>
-        <button class="bottom-tab" id="bt-fiction" data-goto="fiction">
-          <span class="bt-icon">◉</span><span>Fiction</span>
+        <button class="bottom-tab" id="bt-progress" data-goto="progress">
+          <span class="bt-icon">◈</span><span>Progress</span>
         </button>
         <button class="bottom-tab" id="bt-more">
           <span class="bt-icon">⋯</span><span>More</span>
@@ -143,7 +143,12 @@
         <div class="more-sheet-handle"></div>
         <div class="more-sheet-title">More sections</div>
         <button class="more-sheet-item" data-goto="vocab">
-          <div class="more-sheet-icon more-icon-vocab">◆</div>
+          <div
+            class="more-sheet-icon more-icon-vocab"
+            style="color: var(--amber2)"
+          >
+            ◆
+          </div>
           <div class="more-sheet-info">
             <div class="more-sheet-label">Vocabulary</div>
             <div class="more-sheet-desc">
@@ -152,12 +157,30 @@
           </div>
           <div class="more-sheet-arrow">›</div>
         </button>
-        <button class="more-sheet-item" data-goto="progress">
-          <div class="more-sheet-icon more-icon-progress">◈</div>
+        <button class="more-sheet-item" data-goto="fiction">
+          <div
+            class="more-sheet-icon more-icon-fiction"
+            style="color: var(--amber2)"
+          >
+            ◉
+          </div>
           <div class="more-sheet-info">
-            <div class="more-sheet-label">Progress</div>
+            <div class="more-sheet-label">Fiction</div>
+            <div class="more-sheet-desc">Short stories · Novels · Scripts</div>
+          </div>
+          <div class="more-sheet-arrow">›</div>
+        </button>
+        <button class="more-sheet-item" id="more-sheet-freeze-btn">
+          <div
+            class="more-sheet-icon more-icon-freeze"
+            style="color: var(--amber2)"
+          >
+            ❄
+          </div>
+          <div class="more-sheet-info">
+            <div class="more-sheet-label">Use Streak Freeze</div>
             <div class="more-sheet-desc">
-              84-day map · Stats · Activity overview
+              <span id="more-freeze-count">0</span> freeze(s) available
             </div>
           </div>
           <div class="more-sheet-arrow">›</div>
@@ -843,8 +866,38 @@
     <!-- ── Study overlay ── -->
     <div class="study-overlay" id="study-overlay">
       <div class="study-modal" id="study-modal-inner">
-        <button class="study-close" id="study-close-btn">✕</button>
+        <div
+          style="
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 4px;
+          "
+        >
+          <div
+            class="study-counter"
+            style="margin-bottom: 0; flex: 1"
+            id="study-counter-row"
+          >
+            <span id="sc-label">Word 1 of 10</span>
+            <span id="sc-streak" style="color: var(--amber2)"></span>
+          </div>
+          <button
+            class="study-close"
+            id="study-close-btn"
+            style="position: static; margin-left: 12px; flex-shrink: 0"
+          >
+            ✕
+          </button>
+        </div>
         <div id="study-setup" class="session-setup">
+          <button
+            class="study-close"
+            id="study-setup-close-btn"
+            style="position: absolute; top: 14px; right: 16px"
+          >
+            ✕
+          </button>
           <div style="font-size: 44px; margin-bottom: 16px">🧠</div>
           <h2>Study Session</h2>
           <p id="study-setup-desc">
@@ -1180,7 +1233,6 @@
         const bt = document.getElementById(`bt-${name}`);
         if (bt) bt.classList.add("active");
         else document.getElementById("bt-more")?.classList.add("active");
-
         closeMoreSheet();
         VIEW_RENDERERS[name]?.();
       }
@@ -1330,7 +1382,12 @@
             startSession();
             break;
           case "study-close-btn":
+          case "study-setup-close-btn":
             closeStudy();
+            break;
+          case "more-sheet-freeze-btn":
+            closeMoreSheet();
+            handleUseStreakFreeze();
             break;
           case "study-done-close-btn":
             closeStudy();
