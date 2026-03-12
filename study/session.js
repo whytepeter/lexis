@@ -158,7 +158,6 @@ export function retryFuzzy() {
 
 export function closeStudy() {
   document.getElementById("study-overlay").classList.remove("open");
-  // Refresh vocab view if open
   const vocabView = document.getElementById("view-vocab");
   if (vocabView?.classList.contains("active")) {
     import("../views/vocab.js").then((m) => m.renderVocab());
@@ -222,7 +221,11 @@ function _showCard() {
   const card = document.getElementById("study-card");
   card.classList.remove("flipped");
   card.style.background = "";
+
+  // Set word on BOTH faces
   document.getElementById("sc-word").textContent = word;
+  document.getElementById("sc-word-back").textContent = word;
+
   document.getElementById("sc-loading").style.display = "block";
   document.getElementById("sc-meanings").style.display = "none";
   document.getElementById("sc-meanings").innerHTML = "";

@@ -1494,41 +1494,55 @@ textarea.essay-textarea::placeholder {
   width: 100%;
   margin-bottom: 8px;
 }
+
 .study-card {
   width: 100%;
   border-radius: 14px;
   cursor: pointer;
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  transition: border-color 0.2s, background 0.2s;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.45, 0.05, 0.55, 0.95),
+    border-color 0.2s, box-shadow 0.2s;
+  min-height: 200px;
 }
 .study-card:not(.flipped):hover {
-  background: var(--surface3);
-  border-color: var(--amber);
+  box-shadow: 0 0 0 1.5px var(--amber);
+}
+.study-card.flipped {
+  transform: rotateY(180deg);
 }
 
+.study-card-front,
+.study-card-back {
+  border-radius: 14px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+}
+
+/* Front stays absolutely positioned and vertically centred */
 .study-card-front {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 200px;
   padding: 32px 24px;
   text-align: center;
 }
 
+/* Back drives the card height — no absolute, no overflow hidden */
 .study-card-back {
-  display: none;
+  position: relative;
+  display: flex;
   flex-direction: column;
   align-items: flex-start;
   text-align: left;
   padding: 20px 22px;
-}
-.study-card.flipped .study-card-front {
-  display: none;
-}
-.study-card.flipped .study-card-back {
-  display: flex;
+  transform: rotateY(180deg);
+  min-height: 200px;
 }
 
 .study-word {

@@ -2,7 +2,7 @@ lexis/
 ├── index.html (shell only — nav, modals, view containers)
 ├── data/
 │ ├── articles.js (ARTICLES array)
-│ ├── essays.js (ESSAYS array + WEEK_PLAN)
+│ ├── essays.js (ESSAYS array + WEEK*PLAN)
 │ └── fiction.js (FICTION array)
 ├── state/
 │ └── store.js (loadState, saveState, all getters/setters)
@@ -15,6 +15,8 @@ lexis/
 │ └── progress.js (renderProgress)
 ├── study/
 │ └── session.js (all study session logic — setup, flip, rate, done)
+|-- styles
+| |* main.css
 └── utils/
 ├── theme.js (toggleTheme, loadTheme)
 ├── tips.js (toggleTip, dismissTip, restoreDismissedTips)
